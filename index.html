@@ -10,9 +10,7 @@
     <meta http-equiv="Expires" content="0" />
 
     <script src="./modules/viewer2d.js"></script>
-    <script src="./modules/g-parser.js"></script>
     <script src="./modules/hpgl-parser.js"></script>
-    <script src="./modules/dpml-parser.js"></script>
     <script src="./modules/format-check.js"></script>
     <script src="./modules/figure.js"></script>
 
@@ -199,11 +197,7 @@
 
         let idxFile = 2;
         let samples = {};
-        checkFileExists('samples/circles with R.nc', ''+(idxFile++), '[GCode] Circles with R words');
         checkFileExists('samples/B Fabric Nesting.plt', ''+(idxFile++), '[HPGL] B Fabric Nesting');
-        checkFileExists('samples/S Fabric Nesting.plt', ''+(idxFile++), '[HPGL] S Fabric Nesting');
-        checkFileExists('samples/circle_d10mm.nc', ''+(idxFile++), '[GCode] Single circle with I/J/K words');
-        checkFileExists('samples/standard geometric shapes.nc', ''+(idxFile++), '[GCode] Mixed shapes');
 
         elemCommand.addEventListener('click', (event) => {
             //console.log(elemCommand.selectionStart);
@@ -283,16 +277,7 @@
             console.log('format:', format, ', elapsed: ', (new Date().getTime()-tStart));
             tStart = new Date().getTime();
 
-            if (format == 'gcode') {
-                let parser = new GParser();
-                let data = parser.parse(fileContent);
-
-                console.log('Parser elapsed: ', (new Date().getTime()-tStart));
-                tStart = new Date().getTime();
-                
-                viewer.setData(data);
-            }
-            else if (format == 'hpgl') {
+           if (format == 'hpgl') {
                 let parser = new HpglParser();
                 let data = parser.parse(fileContent);
 
@@ -301,15 +286,7 @@
 
                 viewer.setData(data);
             }
-            else if (format == 'dpml') {
-                let parser = new DpmlParser();
-                let data = parser.parse(fileContent);
-
-                console.log('Parser elapsed: ', (new Date().getTime()-tStart));
-                tStart = new Date().getTime();
-
-                viewer.setData(data);
-            }
+           
 
             console.log('Render elapsed: ', (new Date().getTime()-tStart));
 
